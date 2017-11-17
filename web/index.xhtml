@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <br />
+        <p:panel >
+            
+            BIBLIOTECA
+            
+        </p:panel>
+        <h:form>
+                                <p:panelGrid columns="2" style="margin:10px 0">
+                                    <p:panelGrid columns="2">
+                                        <h:outputText value="ADD A BOOK" />
+                                        <p:column headerText="ADD A BOOK">
+                                  
+                                            <p:inputText  placeholder="ISBN" value="#{bookbean.book.isbn}"></p:inputText>                                                                 
+                                     <p:inputText  placeholder="TITLE" value="#{bookbean.book.title}"></p:inputText>                               
+                                     <p:inputText  placeholder="TYPE" value="#{bookbean.book.type}"></p:inputText>
+                                     <p:inputText  placeholder="PRICE" value="#{bookbean.book.price}"></p:inputText>
+                                    <p:commandButton value="Register" action="#{bookbean.addBooks()}" update=":formTable:booktable"></p:commandButton>
+                                    </p:column>
+                                        </p:panelGrid>
+                             <p:column headerText="DELETE BOOK WITH ISDN">
+                                        <h:form>
+                            
+                                  <h:form>
+                                <p:panelGrid columns="1" class="text-center">
+                                <h:outputText value="Ingrese el ISBN a Eliminar" />
+                                <p:inputText  value="#{bookbean.book.isbn}"></p:inputText>                            
+                            </p:panelGrid>
+                            
+                            
+                            <br></br>
+                           <p:commandButton value="Eliminar" action="#{bookbean.deleteBook()}" update=":formTable:booktable"></p:commandButton>
+                            
+                            </h:form>
+                            <br></br>                   
+                                    
+            
+        </h:form>
+                                        
+                                        
+                                        
+                                    </p:column> 
+                                   
+                               </p:panelGrid>
+                            
+                            
+                            <br></br>
+                           
+                          </h:form>
+        
+                            <h:form id="formTable">
+                               <p:dataTable id="booktable" var="book" emptyMessage="Empty Library"
+                                            value="#{bookbean.listBook}">
+                                
+                                <p:column headerText="ISDN">
+                                <h:outputLabel value="#{book.isbn}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="TITLE">
+                                    <h:outputLabel  value="#{book.title}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="TYPE">
+                                    <h:outputLabel value="#{book.type}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="PRICE">
+                                    <h:outputLabel value="#{book.price}"></h:outputLabel>
+                                </p:column>
+                                  <p:column headerText="Modify" style="width:70px;text-align: center">
+                                    <p:commandButton update=":editLibroForm:editLibro" oncomplete="PF('editLibro').show()" icon="ui-icon-search" title="View">
+                                        <f:setPropertyActionListener value="#{book}" target="#{bookbean.selectedBook}" />
+                                    </p:commandButton>
+                                </p:column>
+                                            
+                               </p:dataTable>
+                         
+                            
+                            </h:form>
+                         <h:form id="editLibroForm">
+                                <p:dialog header="Book Modify" widgetVar="editLibro" modal="true" showEffect="fade" hideEffect="fade" resizable="true">
+                                    <p:outputPanel id="editLibro" style="text-align:center;">
+                                        <p:panelGrid  columns="2" rendered="#{not empty bookbean.selectedBook}" columnClasses="label,value">
+
+                                            <h:outputText value="ISBN:" />
+                                            <p:inputText value="#{bookbean.selectedBook.isbn}"></p:inputText>
+
+                                            <h:outputText value="TITLE:" />
+                                            <p:inputText value="#{bookbean.selectedBook.title}"></p:inputText>
+                                            
+
+                                            <h:outputText value="TYPE:" />
+                                            <p:inputText value="#{bookbean.selectedBook.type}"></p:inputText>
+
+                                            <h:outputText value="PRICE:" />
+                                            <p:inputText value="#{bookbean.selectedBook.price}"></p:inputText>
+                                            
+                                            <p:commandButton value="Modify" action ="#{bookbean.editBooks(bookbean.selectedBook)}" update=":formTable:booktable">
+                                               
+                                            </p:commandButton>
+                                        </p:panelGrid>
+                                    </p:outputPanel>
+                                </p:dialog>
+                            </h:form>
+                
+    </h:body>
+</html>
+
